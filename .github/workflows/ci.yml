@@ -19,6 +19,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-
+      - name: Ensure Maven wrapper is executable
+        run: chmod +x ./mvnw
       - name: Build and Test with Maven Wrapper
         run: ./mvnw clean verify
