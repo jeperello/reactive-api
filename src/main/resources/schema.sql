@@ -4,3 +4,7 @@ CREATE TABLE product (
                          name VARCHAR(255) NOT NULL,
                          price DOUBLE NOT NULL
 );
+CREATE TABLE technology (
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            description VARCHAR(500) NOT NULL
+);
