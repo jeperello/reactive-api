@@ -1,6 +1,6 @@
 # 🚀 Reactive Product & Tech API - Spring Boot WebFlux
 
-Esta es una API REST completamente **reactiva** y **no bloqueante** desarrollada con **Spring Boot 3.x** y **Java 21**. El proyecto demuestra estándares de arquitectura moderna, persistencia asíncrona mediante R2DBC y procesamiento de flujos de datos en tiempo real (Streaming).
+Esta es una API REST completamente **reactiva** y **no bloqueante** desarrollada con **Spring Boot 4.0.3** y **Java 21**. El proyecto demuestra estándares de arquitectura moderna, persistencia asíncrona mediante R2DBC y procesamiento de flujos de datos en tiempo real (Streaming).
 
 ## 🛠️ Tecnologías y Stack Técnico
 
