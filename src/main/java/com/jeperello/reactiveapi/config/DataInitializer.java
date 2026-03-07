@@ -41,8 +41,7 @@ public class DataInitializer {
                     new Technology(null, "✅ Mantenerme actualizado con las nuevas tecnologias para microservicios."),
                     new Technology(null, "✅ Mejorar mis habilidades como desarrollador back-end."),
                     new Technology(null, "Nuevamente gracias por pasar. Que tengas un gran dia!! :)")
-
-                    );
+            );
             repositoryTech.saveAll(techs).subscribe(); // Inyecta el nuevo repo en el constructor
             log.info("Carga de tecnologias completada exitosamente.");
 
@@ -57,11 +56,8 @@ public class DataInitializer {
             repository.deleteAll() // Limpiamos la tabla
                     .thenMany(products) // Luego insertamos los nuevos
                     .flatMap(repository::save) // Guardamos cada uno
-                    .subscribe(
-                            p -> log.info("Producto insertado: {}", p),
-                            e -> log.error("Error al inicializar: {}", e.getMessage()),
-                            () -> log.info("Inicialización completada exitosamente.")
-                    );
+                    .subscribe();
+            log.info("Carga de productos completada exitosamente.");
         };
     }
 }

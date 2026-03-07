@@ -35,4 +35,14 @@ class TechnologyApiTest {
                 .expectNextCount(16) // Esperamos las 16 tecnologías
                 .verifyComplete();
     }
+
+    @Test
+    @DisplayName("Debe redirigir de la raíz a la API de tecnologías")
+    void testRootRedirect() {
+        webTestClient.get()
+                .uri("/")
+                .exchange()
+                .expectStatus().isTemporaryRedirect()
+                .expectHeader().valueEquals("Location", "/api/technologies");
+    }
 }
