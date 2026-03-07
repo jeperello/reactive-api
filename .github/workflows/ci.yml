@@ -7,9 +7,9 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build:
+  # Job 1: Validar código y tests
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -23,3 +23,23 @@ jobs:
         run: chmod +x ./mvnw
       - name: Build and Test with Maven Wrapper
         run: ./mvnw clean verify
+
+  # Job 2: Validar que el Dockerfile funciona (Solo si los tests pasaron)
+  docker-check:
+    needs: test # Este job depende de que el anterior sea exitoso
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image (Dry Run)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false # No la subimos a ningún lado, solo validamos que compile
+          tags: reactive-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
