@@ -1,7 +1,9 @@
 package com.jeperello.reactiveapi.config;
 
+import com.jeperello.reactiveapi.model.Advantage;
 import com.jeperello.reactiveapi.model.Product;
 import com.jeperello.reactiveapi.model.Technology;
+import com.jeperello.reactiveapi.repository.AdvantageRepository;
 import com.jeperello.reactiveapi.repository.ProductRepository;
 import com.jeperello.reactiveapi.repository.TechnologyRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +15,26 @@ import reactor.core.publisher.Flux;
 
 @Configuration
 @RequiredArgsConstructor
-@Slf4j // Para usar log.info
+@Slf4j
 public class DataInitializer {
 
     private final ProductRepository repository;
     private final TechnologyRepository repositoryTech;
+    private final AdvantageRepository advantageRepository;
 
     @Bean
     public CommandLineRunner init() {
         return args -> {
             log.info("Iniciando carga de datos en H2...");
+            Flux<Advantage>advantages = Flux.just(
+                    new Advantage(null,  "El Event Loop de Netty maneja múltiples streams simultáneos con consumo mínimo."),
+                    new Advantage(null,  "Todos los flujos avanzan en paralelo, sin bloqueos de hilos."),
+                    new Advantage(null,  "API No Bloqueante ante múltiples requests simultáneos."),
+                    new Advantage(null,  "¡Esto es escalabilidad reactiva pura!"),
+                    new Advantage(null,  "¡Gracias por acompañarme en esta demo!")
+            );
+            advantageRepository.saveAll(advantages).subscribe(); // Inyecta el nuevo repo en el constructor
+            log.info("Carga de ventajas completada exitosamente.");
             Flux<Technology> techs = Flux.just(
                     new Technology(null, "Bienvenido y gracias por pasar por mi primera API REST reactiva."),
                     new Technology(null, "Paso a comentarte brevemente las tecnologias utilizadas:"),

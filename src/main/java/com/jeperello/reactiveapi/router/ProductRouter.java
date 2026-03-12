@@ -1,5 +1,6 @@
 package com.jeperello.reactiveapi.router;
 
+import com.jeperello.reactiveapi.handler.AdvantageHandler;
 import com.jeperello.reactiveapi.handler.ProductHandler;
 import com.jeperello.reactiveapi.handler.TechnologyHandler;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,9 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class ProductRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> route(ProductHandler handler, TechnologyHandler techHandler) {
+    public RouterFunction<ServerResponse> route(ProductHandler handler,
+                                                TechnologyHandler techHandler,
+                                                AdvantageHandler advHandler) {
         return RouterFunctions
                 // Redirección de la raíz a las tecnologías
                 .route(GET("/"), request -> ServerResponse.temporaryRedirect(URI.create("/api/technologies")).build())
@@ -26,6 +29,8 @@ public class ProductRouter {
                 .andRoute(GET("/api/products/{id}"), handler::getProductById)
 
                 // Ruta de Tecnologías (Streaming)
-                .andRoute(GET("/api/technologies"), techHandler::streamTechnologies);
+                .andRoute(GET("/api/technologies"), techHandler::streamTechnologies)
+                // Ruta de Advantages (Streaming)
+                .andRoute(GET("/api/advantages"), advHandler::streamAdvantages);
     }
 }

@@ -9,3 +9,8 @@ CREATE TABLE technology (
                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
                             description VARCHAR(500) NOT NULL
 );
+DROP TABLE IF EXISTS advantage;
+CREATE TABLE advantage (
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            description VARCHAR(500) NOT NULL
+);
