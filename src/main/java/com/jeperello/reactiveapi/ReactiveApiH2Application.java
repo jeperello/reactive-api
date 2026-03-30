@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ReactiveApiH2Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReactiveApiH2Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ReactiveApiH2Application.class, args);
+        System.out.println("Total de proccesors " + Runtime.getRuntime().availableProcessors());;
+    }
 
 }
