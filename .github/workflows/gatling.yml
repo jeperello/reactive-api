@@ -1,0 +1,45 @@
+name: Gatling Performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL del entorno a probar"
+        required: true
+        default: "http://localhost:8080"
+      simulation:
+        description: "Simulacion de Gatling a ejecutar"
+        required: true
+        default: "Technologies1UserSimulation"
+        type: choice
+        options:
+          - Technologies1UserSimulation
+          - Technologies10UserSimulation
+
+permissions:
+  contents: read
+
+jobs:
+  gatling:
+    name: Run Gatling simulation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Grant execute permission to Maven wrapper
+        run: chmod +x mvnw
+
+      - name: Run selected Gatling simulation
+        run: >
+          ./mvnw --batch-mode gatling:test
+          -Dgatling.simulationClass=com.jeperello.reactiveapi.simulations.${{ inputs.simulation }}
+          -Dgatling.baseUrl=${{ inputs.base_url }}
